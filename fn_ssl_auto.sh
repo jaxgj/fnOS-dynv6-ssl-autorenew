@@ -95,7 +95,7 @@ acme.sh --issue \
 --dns dns_dynv6 \
 -d $DOMAIN \
 -d *.$DOMAIN \
---dnssleep 600 \
+--dnssleep 900 \
 --force
 
 # 校验证书是否生成成功
