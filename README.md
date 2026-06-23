@@ -1,5 +1,3 @@
-# 文件名：README.md
-
 # FnOS 飞牛OS dynv6 SSL 全自动续证一键脚本
 解决飞牛OS原生不支持 dynv6 DDNS 自动SSL续期痛点｜开源可审计｜一次配置永久自动续签
 
