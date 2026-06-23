@@ -16,24 +16,32 @@ echo -e "\033[32m      FnOS dynv6 SSL全自动证书部署工具      \033[0m"
 echo -e "\033[32m=============================================\033[0m"
 echo ""
 
-# 交互式录入基础信息
-read -p "请输入你的dynv6完整域名（示例：xxxx.dynv6.net）: " DOMAIN
-if [ -z "$DOMAIN" ]; then
-    echo "域名不能为空，脚本退出"
-    exit 1
-fi
+# 交互式录入域名，循环强制非空
+DOMAIN=""
+while [ -z "$DOMAIN" ]; do
+    read -p "请输入你的dynv6完整域名（示例：xxxx.dynv6.net）: " DOMAIN
+    if [ -z "$DOMAIN" ]; then
+        echo -e "\033[31m域名不能为空，请重新输入！\033[0m"
+    fi
+done
 
-read -p "请输入dynv6后台API Token密钥: " DYNV6_TOKEN
-if [ -z "$DYNV6_TOKEN" ]; then
-    echo "dynv6 Token不能为空，脚本退出"
-    exit 1
-fi
+# 交互式录入dynv6 Token，循环强制非空
+DYNV6_TOKEN=""
+while [ -z "$DYNV6_TOKEN" ]; do
+    read -p "请输入dynv6后台API Token密钥: " DYNV6_TOKEN
+    if [ -z "$DYNV6_TOKEN" ]; then
+        echo -e "\033[31mToken不能为空，请重新输入！\033[0m"
+    fi
+done
 
-read -p "请输入接收证书过期提醒的邮箱地址: " MAIL
-if [ -z "$MAIL" ]; then
-    echo "提醒邮箱不能为空，脚本退出"
-    exit 1
-fi
+# 交互式录入提醒邮箱，循环强制非空
+MAIL=""
+while [ -z "$MAIL" ]; do
+    read -p "请输入接收证书过期提醒的邮箱地址: " MAIL
+    if [ -z "$MAIL" ]; then
+        echo -e "\033[31m提醒邮箱不能为空，请重新输入！\033[0m"
+    fi
+done
 
 echo ""
 # 证书导出存储路径交互逻辑
@@ -50,11 +58,13 @@ if [ -d "${DEFAULT_BASE}" ]; then
     fi
 else
     echo -e "\033[33m警告：默认根目录 ${DEFAULT_BASE} 不存在，请手动输入可用的完整存储路径\033[0m"
-    read -p "证书导出完整存放路径: " DOWNLOAD_CERT
-    if [ -z "${DOWNLOAD_CERT}" ]; then
-        echo "路径不能为空，脚本退出"
-        exit 1
-    fi
+    DOWNLOAD_CERT=""
+    while [ -z "$DOWNLOAD_CERT" ]; do
+        read -p "证书导出完整存放路径: " DOWNLOAD_CERT
+        if [ -z "$DOWNLOAD_CERT" ]; then
+            echo -e "\033[31m路径不能为空，请重新输入！\033[0m"
+        fi
+    done
 fi
 
 echo ""
