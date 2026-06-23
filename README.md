@@ -27,4 +27,4 @@
 ### 方式1：一键下载并直接运行（推荐小白）
 SSH登录飞牛NAS，切换至 root(#) 权限后执行：
 ```bash
-curl -fsSL https://cdn.jsdelivr.net/gh/jaxgj/fnOS-dynv6-ssl-autorenew@main/fn_ssl_auto.sh | bash
+curl -fsSL https://cdn.jsdelivr.net/gh/jaxgj/fnOS-dynv6-ssl-autorenew@main/autorenew.sh | bash
