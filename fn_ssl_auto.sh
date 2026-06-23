@@ -16,10 +16,10 @@ echo -e "\033[32m      FnOS dynv6 SSL全自动证书部署工具      \033[0m"
 echo -e "\033[32m=============================================\033[0m"
 echo ""
 
-# 交互式录入域名，循环强制非空
+# 交互式录入域名，循环强制非空，强制从终端读取输入
 DOMAIN=""
 while [ -z "$DOMAIN" ]; do
-    read -p "请输入你的dynv6完整域名（示例：xxxx.dynv6.net）: " DOMAIN
+    read -p "请输入你的dynv6完整域名（示例：xxxx.dynv6.net）: " DOMAIN < /dev/tty
     if [ -z "$DOMAIN" ]; then
         echo -e "\033[31m域名不能为空，请重新输入！\033[0m"
     fi
@@ -28,7 +28,7 @@ done
 # 交互式录入dynv6 Token，循环强制非空
 DYNV6_TOKEN=""
 while [ -z "$DYNV6_TOKEN" ]; do
-    read -p "请输入dynv6后台API Token密钥: " DYNV6_TOKEN
+    read -p "请输入dynv6后台API Token密钥: " DYNV6_TOKEN < /dev/tty
     if [ -z "$DYNV6_TOKEN" ]; then
         echo -e "\033[31mToken不能为空，请重新输入！\033[0m"
     fi
@@ -37,7 +37,7 @@ done
 # 交互式录入提醒邮箱，循环强制非空
 MAIL=""
 while [ -z "$MAIL" ]; do
-    read -p "请输入接收证书过期提醒的邮箱地址: " MAIL
+    read -p "请输入接收证书过期提醒的邮箱地址: " MAIL < /dev/tty
     if [ -z "$MAIL" ]; then
         echo -e "\033[31m提醒邮箱不能为空，请重新输入！\033[0m"
     fi
@@ -50,7 +50,7 @@ DEFAULT_FOLDER="ssl_${DOMAIN}"
 DEFAULT_DOWNLOAD="${DEFAULT_BASE}/${DEFAULT_FOLDER}"
 
 if [ -d "${DEFAULT_BASE}" ]; then
-    read -p "请输入证书导出存放路径（默认：${DEFAULT_DOWNLOAD}，直接回车使用默认路径）: " INPUT_DOWNLOAD
+    read -p "请输入证书导出存放路径（默认：${DEFAULT_DOWNLOAD}，直接回车使用默认路径）: " INPUT_DOWNLOAD < /dev/tty
     if [ -z "${INPUT_DOWNLOAD}" ]; then
         DOWNLOAD_CERT="${DEFAULT_DOWNLOAD}"
     else
@@ -60,11 +60,17 @@ else
     echo -e "\033[33m警告：默认根目录 ${DEFAULT_BASE} 不存在，请手动输入可用的完整存储路径\033[0m"
     DOWNLOAD_CERT=""
     while [ -z "$DOWNLOAD_CERT" ]; do
-        read -p "证书导出完整存放路径: " DOWNLOAD_CERT
+        read -p "证书导出完整存放路径: " DOWNLOAD_CERT < /dev/tty
         if [ -z "$DOWNLOAD_CERT" ]; then
             echo -e "\033[31m路径不能为空，请重新输入！\033[0m"
         fi
     done
+fi
+
+# 二次校验核心参数非空，异常直接退出
+if [ -z "$DOMAIN" ] || [ -z "$DYNV6_TOKEN" ] || [ -z "$MAIL" ]; then
+    echo -e "\033[31m核心参数缺失，脚本退出\033[0m"
+    exit 1
 fi
 
 echo ""
@@ -120,7 +126,7 @@ echo -e "\033[33m兼容老旧设备方案：\033[0m"
 echo "证书+私钥同上，额外将 issuer_certificate.crt 填入中间证书栏后保存"
 echo ""
 echo -e "\033[33m==================== 等待手动上传证书 ====================\033[0m"
-read -p "完成飞牛网页证书新增并保存后，按下回车继续自动部署流程"
+read -p "完成飞牛网页证书新增并保存后，按下回车继续自动部署流程" < /dev/tty
 
 echo -e "\033[34m【5/8】自动检索飞牛网页上传生成的数字ID证书目录\033[0m"
 BASE_SSL_DIR="/usr/trim/var/trim_connect/ssls/${DOMAIN}"
