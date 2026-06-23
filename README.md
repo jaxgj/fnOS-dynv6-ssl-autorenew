@@ -23,7 +23,6 @@
 ## 🧩 支持域名范围
 - ✅ 完全支持：所有 dynv6 动态域名（xxxx.dynv6.net）
 - ❌ 不支持：FreeDNS 共享二级域名（bot.nu / mooo.com）服务商API限制，无法全自动TXT验证
-- 其他域名（Cloudflare/阿里云DNSPod/华为云）如需兼容，可提Issue获取多服务商改造版本
 
 ## 🚀 一键部署命令（国内CDN加速，无访问墙）
 ### 方式1：一键下载并直接运行（推荐小白）
